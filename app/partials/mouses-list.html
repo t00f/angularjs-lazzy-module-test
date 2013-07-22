@@ -1,0 +1,30 @@
+<div class="mouse-screen">
+
+    <!-- Should use an ng-include here -->
+    <div ng-controller="MouseActionController">
+        <h1>Modules : Nouveaux liens</h1>
+
+        <div ng-repeat="module in modules">
+            <h2>{{module.name}}</h2>
+            <a href="#{{module.action}}">GO to {{module.label}}</a>
+        </div>
+
+    </div>
+
+<table class="mouse-list">
+    <tr>
+        <th>ID</th>
+        <th>NAME</th>
+        <th>SEX</th>
+        <th></th>
+    </tr>
+    <tr ng-repeat="mouse in mouses">
+        <td>{{mouse.id}}</td>
+        <td>{{mouse.name}}</td>
+        <td>{{mouse.sex}}</td>
+        <td class="mouse-action"></td>
+    </tr>
+
+</table>
+
+</div>
