@@ -23,4 +23,4 @@ Use python server to launch it ::
     $ python -m SimpleHTTPServer
     Serving HTTP on 0.0.0.0 port 8000 ...
 
-Go to your browser at localhost:8000
+Then, go to your browser at localhost:8000
