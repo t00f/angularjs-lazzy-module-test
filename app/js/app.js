@@ -43,23 +43,36 @@ ngDefine('demoApp', [
 
                 // Define a new template
                 // Ideally we could retrieve it from xhr using $http.get()
-                var context = '<div><h1 id="title">{{title}}</h1><ul id="list"><li ng-repeat="mouse in mouses"  ng-click="doSomething(mouse)">{{mouse.id}} - {{mouse.name}}</li></ul></div>';
-
-                /*
-                THIS IS NOT FUNCTIONNAL FOR THE MOMENT, Be patient ;)
-                var module_tpl = '<div><ul id="list"><li>HEY HEY</li></ul></div>';
+                var context = '<div id="content"><h1 id="title">{{title}}</h1><ul id="list"><li ng-repeat="mouse in mouses"  ng-click="doSomething(mouse)">{{mouse.id}} - {{mouse.name}}</li></ul><p id="comment">Base comment</p></div>',
+                    module_tpl = '<div><ul id="list"><li>HEY HEY</li>##CONTENT##</ul><p id="comment"><b>Module additionnel</b><br />##CONTENT##<br />Voici le texte du module</p><h5>NON VISIBLE</h5></div>',
+                    domContext = $('<div/>').append(context);
 
                 //var html = $.parseHTML(current.locals.$template);
                 $('<div/>').append(module_tpl).find("[id]").each(function() {
-                    console.log($('<div/>').append(context).find("[id='"+$(this).attr("id")+"']").append($(this).html()));
+                    // Cas simple, pas de ##CONTENT##
+                    var baseElements = domContext.find("[id='"+$(this).attr("id")+"']"),
+                        moduleHtml = $(this).html(),
+                        index = -1;
 
-                    //console.log($(this).html());
-                    //var content = $('<div/>').append(context).find("[id='"+$(this).attr("id")+"']").append($(this).html()).html();
-                    //$(context).find("[id='"+$(this).attr("id")+"']").html(content);
-                    //console.log(content);
+                    /*console.log("===========");
+                    console.log("BASE HTML : " + baseElements.html());
+                    console.log("MODULE HTML : " + moduleHtml);
+                    */
+
+                    if (baseElements.length > 0) {
+                        index = moduleHtml.indexOf("##CONTENT##");
+
+                        if (index > 0) {
+                            moduleHtml = moduleHtml.replace("##CONTENT##", baseElements.html());
+                            baseElements.html(moduleHtml);
+                        }
+                        else {
+                            baseElements.append($(this).html());
+                        }
+                    }
                 });
-                console.log($('<div/>').html());
-                */
+
+                context = domContext.html()
 
                 // Uncomment this line to change rendered template
                 //current.locals.$template = context;
